@@ -1,0 +1,20 @@
+{
+    "aliados" : [
+        {
+            "id_aliado" : "",
+            "aliado_nombre" : "",
+            "aliado_telefono" : "",
+            "aliado_babull" : "",
+            "aliado_logo" : "",
+            "aliado_qr" : ""
+        }
+    ],
+    "tarjetas" : [
+        {
+            "id_tarjeta" : "",
+            "monto" : "",
+            "codigo" : "",
+            "aliado_id" : ""
+        }
+    ]    
+}
