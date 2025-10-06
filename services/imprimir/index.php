@@ -193,25 +193,25 @@ if (!empty($tarjetas)) {
         $pdf->SetTextColor(0);
 
         // --- SECCIÓN CENTRAL (REGALO, Monto, URL y LOGO FABRICANTE) ---
-        $y_regalo = $y_info + 10;
+        $y_regalo = $y_info + 8;
         
         $pdf->SetXY($x, $y_regalo);
         $pdf->SetFont('Arial', 'B', 16);
         $pdf->SetTextColor($COLOR_DORADO[0], $COLOR_DORADO[1], $COLOR_DORADO[2]);
         $pdf->Cell($ancho_tarjeta, 3, 'REGALO', 0, 1, 'C');
         
-        $pdf->SetXY($x, $y_regalo + 8);
+        $pdf->SetXY($x, $y_regalo + 6);
         $pdf->SetFont('Arial', 'B', 24);
         $pdf->SetTextColor(0);
         $pdf->Cell($ancho_tarjeta, 5, $monto_formato, 0, 1, 'C');
         
-        $pdf->SetXY($x, $y_regalo + 15);
+        $pdf->SetXY($x, $y_regalo + 13);
         $pdf->SetFont('Arial', 'B', 9);
         $pdf->Cell($ancho_tarjeta, 3, $datos_aliado['aliado_babull'], 0, 1, 'C');
         
         $TAM_LOGO_FABRICANTE = 13;
         $x_logo_fab = $x + ($ancho_tarjeta / 2) - ($TAM_LOGO_FABRICANTE / 2);
-        $y_logo_fab = $y_regalo + 19;
+        $y_logo_fab = $y_regalo + 18;
         
         if (file_exists($logo_fabricante_ruta)) {
             $pdf->Image($logo_fabricante_ruta, $x_logo_fab, $y_logo_fab, $TAM_LOGO_FABRICANTE, $TAM_LOGO_FABRICANTE);
@@ -221,16 +221,26 @@ if (!empty($tarjetas)) {
         }
 
         // --- CÓDIGO DE BARRAS ---
-        $ALTURA_BARCODE_Y = $y + $alto_tarjeta - 30;
+        $ALTURA_BARCODE_Y = $y + $alto_tarjeta - 33;
         $alto_para_barcode = 16;
         $ancho_tarjeta_margin = 2;
         $ancho_para_barcode_dibujo = $ancho_tarjeta - ($ancho_tarjeta_margin * 2);
         $x_barcode_inicio = $x + $ancho_tarjeta_margin;
         
         $pdf->BarCode39($x_barcode_inicio, $ALTURA_BARCODE_Y, $tarjeta['codigo'], $ancho_para_barcode_dibujo, $alto_para_barcode);
-        
+
         // --- FRANJA INFERIOR (Condiciones - 5mm) ---
-        $y_bottom = $y + $alto_tarjeta - 10;
+        $y_bottom = $y + $alto_tarjeta - 18;
+        $pdf->SetFillColor($COLOR_GRIS_FONDO[0], $COLOR_GRIS_FONDO[1], $COLOR_GRIS_FONDO[2]);
+        //$pdf->SetFillColor(122, 122, 122);
+        $pdf->Rect($x+2, $y_bottom, $ancho_tarjeta-5, 4, 'F');
+        $pdf->SetFont('Arial', 'B', 8);
+        $pdf->SetTextColor($COLOR_NEGRO[0], $COLOR_NEGRO[1], $COLOR_NEGRO[2]);
+
+        $pdf->BarCode39($x_barcode_inicio, $ALTURA_BARCODE_Y+4.9, $tarjeta['codigo'], $ancho_para_barcode_dibujo, $alto_para_barcode);
+
+        // --- FRANJA INFERIOR (Condiciones - 5mm) ---
+        $y_bottom = $y + $alto_tarjeta - 8;
         $pdf->SetFillColor($COLOR_BLANCO[0], $COLOR_BLANCO[1], $COLOR_BLANCO[2]);
         $pdf->Rect($x, $y_bottom, $ancho_tarjeta, 8, 'F');
         $pdf->SetFont('Arial', 'B', 8);
